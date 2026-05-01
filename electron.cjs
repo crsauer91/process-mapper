@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron')
 const path = require('path')
+const fs = require('fs')
 const isDev = process.env.NODE_ENV === 'development'
 
 let mainWindow = null
@@ -64,9 +65,14 @@ function buildMenu() {
           click: () => mainWindow?.webContents.send('menu:import'),
         },
         {
-          label: 'Export…',
+          label: 'Export as JSON…',
           accelerator: 'CmdOrCtrl+S',
           click: () => mainWindow?.webContents.send('menu:export'),
+        },
+        {
+          label: 'Export as PDF…',
+          accelerator: 'CmdOrCtrl+P',
+          click: () => mainWindow?.webContents.send('menu:export-pdf'),
         },
         { type: 'separator' },
         isMac ? { role: 'close' } : { role: 'quit' },
@@ -224,8 +230,12 @@ ipcMain.on('context-menu:canvas', (event, { x, y }) => {
     },
     { type: 'separator' },
     {
-      label: 'Export…',
+      label: 'Export as JSON…',
       click: () => event.sender.send('menu:export'),
+    },
+    {
+      label: 'Export as PDF…',
+      click: () => event.sender.send('menu:export-pdf'),
     },
     {
       label: 'Import…',
@@ -233,6 +243,24 @@ ipcMain.on('context-menu:canvas', (event, { x, y }) => {
     },
   ])
   menu.popup({ window: BrowserWindow.fromWebContents(event.sender) })
+})
+
+// PDF export — renders via printToPDF (respects @media print CSS)
+ipcMain.handle('export:pdf', async (event, { title }) => {
+  const win = BrowserWindow.fromWebContents(event.sender)
+  const slug = (title || 'process-map').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+  const { filePath, canceled } = await dialog.showSaveDialog(win, {
+    title: 'Export as PDF',
+    defaultPath: `${slug}.pdf`,
+    filters: [{ name: 'PDF Document', extensions: ['pdf'] }],
+  })
+  if (canceled || !filePath) return
+  const pdfData = await win.webContents.printToPDF({
+    printBackground: true,
+    pageSize: 'A4',
+    landscape: true,
+  })
+  fs.writeFileSync(filePath, pdfData)
 })
 
 app.whenReady().then(() => {

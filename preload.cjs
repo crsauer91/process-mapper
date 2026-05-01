@@ -6,11 +6,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.send('context-menu:node', { nodeId, label }),
   showCanvasContextMenu: (x, y) =>
     ipcRenderer.send('context-menu:canvas', { x, y }),
+  exportPDF: (title) =>
+    ipcRenderer.invoke('export:pdf', { title }),
 
   // Listen for menu/context-menu actions from main process
   on: (channel, callback) => {
     const allowed = [
-      'menu:new', 'menu:import', 'menu:export', 'menu:clear',
+      'menu:new', 'menu:import', 'menu:export', 'menu:export-pdf', 'menu:clear',
       'menu:rename-selected', 'menu:delete-selected', 'menu:fit-view',
       'menu:add-node',
       'node-action:rename', 'node-action:duplicate', 'node-action:delete',

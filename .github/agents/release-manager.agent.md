@@ -38,10 +38,15 @@ You are the Release Manager for the **process-mapper** project. Your sole respon
 3. Update `package.json` version.
 4. Update or create `CHANGELOG.md` using the suggested entry from change-detector.
 5. Update `README.md` if features/instructions changed.
-6. Stage and commit: `git add -A && git commit -m "chore: release v{version} — {short summary}"`
-7. Tag: `git tag v{version}`
-8. Push: `git push && git push --tags`
-9. Create GitHub release using the github MCP tools.
+6. **Rebuild the app** so the in-app version display (`v{version}` in the header) reflects the new version:
+   ```bash
+   pkill -x "Process Mapper" 2>/dev/null; rm -rf release/ && npm run electron:build
+   ```
+   Vite injects `__APP_VERSION__` from `package.json` at build time — the app will show the wrong version if shipped from an old build.
+7. Stage and commit: `git add -A && git commit -m "chore: release v{version} — {short summary}"`
+8. Tag: `git tag v{version}`
+9. Push: `git push && git push --tags`
+10. Create GitHub release using the github MCP tools.
 
 ## Constraints
 

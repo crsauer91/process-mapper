@@ -14,6 +14,7 @@ Built with **React 19 + TypeScript + Vite + Electron + @xyflow/react**.
 - **Right-click canvas** to add any node type at cursor position, Fit View, Export, or Import
 - **Native app menu bar** — File, Edit, Canvas, View, and Window menus with full keyboard shortcuts
 - **Editable process title** — click the title in the header to rename your diagram; export uses it as the filename
+- **Export as PDF** — File menu (`Cmd+P`), toolbar button, or right-click canvas; native Save dialog, landscape A4, diagram only
 - **Export / Import** diagrams as JSON
 - **Draggable title bar** with version number
 - Native macOS app (arm64 + x64 DMG)

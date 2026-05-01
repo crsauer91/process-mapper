@@ -29,6 +29,7 @@ declare global {
     electronAPI?: {
       showNodeContextMenu: (nodeId: string, label: string) => void;
       showCanvasContextMenu: (x: number, y: number) => void;
+      exportPDF: (title: string) => Promise<void>;
       on: (channel: string, cb: (...args: unknown[]) => void) => (() => void) | undefined;
     };
   }
@@ -121,6 +122,10 @@ function FlowCanvasInner({ processTitle = 'process-map' }: FlowCanvasProps) {
     a.click();
     URL.revokeObjectURL(url);
   }, [processTitle, nodes, edges]);
+
+  const exportPDF = useCallback(() => {
+    window.electronAPI?.exportPDF(processTitle);
+  }, [processTitle]);
 
   const importFileRef = useRef<HTMLInputElement>(null);
 
@@ -219,6 +224,7 @@ function FlowCanvasInner({ processTitle = 'process-map' }: FlowCanvasProps) {
 
     unsubs.push(api.on('menu:new', () => { setNodes(initialNodes); setEdges([]); }));
     unsubs.push(api.on('menu:export', () => exportFlow()));
+    unsubs.push(api.on('menu:export-pdf', () => exportPDF()));
     unsubs.push(api.on('menu:import', () => importFileRef.current?.click()));
     unsubs.push(api.on('menu:clear', () => clearCanvas()));
     unsubs.push(api.on('menu:fit-view', () => fitView({ duration: 300 })));
@@ -243,12 +249,13 @@ function FlowCanvasInner({ processTitle = 'process-map' }: FlowCanvasProps) {
     }));
 
     return () => unsubs.forEach((u) => u?.());
-  }, [exportFlow, clearCanvas, fitView, renameNode, deleteNode, duplicateNode, addNodeAt, setNodes, setEdges]);
+  }, [exportFlow, exportPDF, clearCanvas, fitView, renameNode, deleteNode, duplicateNode, addNodeAt, setNodes, setEdges]);
 
   return (
     <div className="canvas-wrapper" ref={reactFlowWrapper}>
       <div className="toolbar">
-        <button className="btn-secondary" onClick={exportFlow}>Export</button>
+        <button className="btn-secondary" onClick={exportFlow}>Export JSON</button>
+        <button className="btn-secondary" onClick={exportPDF}>Export PDF</button>
         <button className="btn-secondary" onClick={() => importFileRef.current?.click()}>Import</button>
         <button className="btn-danger" onClick={clearCanvas}>Clear</button>
         <input

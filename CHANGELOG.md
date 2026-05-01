@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.2.0] - 2026-05-01
+
+### Added
+- Export diagram as PDF via File → Export as PDF… (`Cmd+P`), toolbar button, or canvas right-click menu
+- Uses Electron `printToPDF` with native Save dialog; outputs landscape A4 with diagram only (header, palette, toolbar, and controls hidden via `@media print`)
+
 ## [1.1.0] - 2026-05-01
 
 ### Added
