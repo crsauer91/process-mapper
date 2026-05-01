@@ -16,6 +16,9 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
+  padding-left: 88px;
+  gap: 10px;
+  -webkit-app-region: drag;
 }
 
 .app-title {
@@ -23,6 +26,56 @@
   font-weight: 700;
   color: #cba6f7;
   letter-spacing: 0.04em;
+  -webkit-app-region: no-drag;
+}
+
+.app-version {
+  font-size: 11px;
+  color: #585b70;
+  font-weight: 500;
+  -webkit-app-region: no-drag;
+  margin-left: auto;
+}
+
+.app-divider {
+  color: #45475a;
+  font-size: 14px;
+  -webkit-app-region: no-drag;
+}
+
+.process-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #cdd6f4;
+  cursor: text;
+  padding: 3px 8px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  -webkit-app-region: no-drag;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.process-title:hover {
+  border-color: #45475a;
+  background: #1e1e2e;
+}
+
+.process-title-input {
+  font-size: 14px;
+  font-weight: 600;
+  color: #cdd6f4;
+  background: #1e1e2e;
+  border: 1px solid #cba6f7;
+  border-radius: 5px;
+  padding: 3px 8px;
+  outline: none;
+  width: 260px;
+  -webkit-app-region: no-drag;
+  font-family: inherit;
 }
 
 .app-body {

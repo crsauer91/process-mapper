@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.0] - 2026-05-01
+
+### Added
+- Native macOS app menu bar with File, Edit, Canvas, View, and Window submenus
+- Right-click context menu on nodes: Rename, Duplicate, Delete
+- Right-click context menu on canvas background: Add node (all types), Fit View, Export, Import
+- Editable process title in the header bar (click to rename, Enter/Escape to confirm)
+- Export filename now uses the process title as a slug
+- Electron preload bridge (`contextBridge`) for secure IPC between main and renderer
+
+### Changed
+- App menu actions (New, Export, Import, Clear, Fit View, Rename/Delete selected) now available from menu bar in addition to toolbar buttons
+
 ## [1.0.0] - 2026-05-01
 
 ### Added

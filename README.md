@@ -9,7 +9,11 @@ Built with **React 19 + TypeScript + Vite + Electron + @xyflow/react**.
 - **4 node types**: Start, End, Process, Decision (diamond)
 - **Drag & drop** nodes from the palette onto the canvas
 - **Connect nodes** by dragging from handles
-- **Rename nodes** by double-clicking
+- **Rename nodes** by double-clicking or via right-click context menu
+- **Right-click nodes** for Rename, Duplicate, Delete
+- **Right-click canvas** to add any node type at cursor position, Fit View, Export, or Import
+- **Native app menu bar** — File, Edit, Canvas, View, and Window menus with full keyboard shortcuts
+- **Editable process title** — click the title in the header to rename your diagram; export uses it as the filename
 - **Export / Import** diagrams as JSON
 - **Draggable title bar** with version number
 - Native macOS app (arm64 + x64 DMG)
